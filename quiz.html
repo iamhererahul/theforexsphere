@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>The Forex Sphere — Trading Quiz (25 Qs)</title>
+    <style>
+      /* === Base & theme === */
+      :root {
+        --bg: #071226;
+        --card: #071a2b;
+        --muted: #9aa9b6;
+        --accent: #00b1ff;
+        --accent-2: #39d0ff;
+        --glass: rgba(255, 255, 255, 0.03);
+        --radius: 12px;
+        --max-width: 980px;
+        --font-sans: "Helvetica Neue", Arial, sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: var(--font-sans);
+        background: linear-gradient(180deg, #021022 0%, #071226 60%);
+        color: #e6f6ff;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        padding-bottom: 60px;
+      }
+
+      /* === Header === */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background: linear-gradient(
+          90deg,
+          rgba(0, 14, 26, 0.85),
+          rgba(2, 20, 35, 0.85)
+        );
+        backdrop-filter: blur(6px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      }
+      .topbar {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        padding: 14px;
+      }
+      .logo {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .logo svg {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        padding: 6px;
+      }
+      .brand {
+        line-height: 1;
+      }
+      .brand h1 {
+        margin: 0;
+        font-size: 18px;
+        color: #8fe7ff;
+      }
+      .brand p {
+        margin: 0;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      nav {
+        margin-left: auto;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .pill {
+        padding: 8px 14px;
+        border-radius: 12px;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid rgba(255, 255, 255, 0.03);
+        cursor: pointer;
+      }
+      .pill.active {
+        background: linear-gradient(
+          90deg,
+          rgba(0, 177, 255, 0.12),
+          rgba(57, 208, 255, 0.07)
+        );
+        color: var(--accent-2);
+        border-color: rgba(57, 208, 255, 0.12);
+      }
+
+      /* === Hero === */
+      .hero {
+        max-width: var(--max-width);
+        margin: 18px auto;
+        padding: 20px;
+        border-radius: var(--radius);
+        background: linear-gradient(
+          180deg,
+          rgba(3, 18, 28, 0.6),
+          rgba(2, 12, 20, 0.5)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.03);
+        box-shadow: 0 6px 30px rgba(2, 10, 20, 0.6);
+      }
+      .hero-grid {
+        display: flex;
+        gap: 18px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .hero-left {
+        flex: 1 1 320px;
+        min-width: 260px;
+      }
+      .hero-left h2 {
+        margin: 6px 0 8px;
+        font-size: 28px;
+        line-height: 1.05;
+        color: white;
+      }
+      .hero-left h3 {
+        margin: 0;
+        color: var(--accent);
+        font-size: 22px;
+      }
+      .hero-left p {
+        color: var(--muted);
+        margin-top: 10px;
+      }
+      .hero-right {
+        width: 320px;
+        min-width: 220px;
+        border-radius: 12px;
+        overflow: hidden;
+        background: linear-gradient(135deg, #0b2b43, #05213a);
+      }
+      .hero-art {
+        width: 100%;
+        height: 160px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .hero-art svg {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.95;
+      }
+
+      /* === Quiz card === */
+      .quiz-wrap {
+        max-width: var(--max-width);
+        margin: 18px auto;
+        padding: 18px;
+      }
+      .card {
+        background: linear-gradient(
+          180deg,
+          rgba(10, 24, 36, 0.7),
+          rgba(6, 18, 28, 0.6)
+        );
+        border-radius: 12px;
+        padding: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.03);
+      }
+      .meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .progress {
+        height: 10px;
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: 8px;
+        overflow: hidden;
+        margin-top: 12px;
+      }
+      .progress > i {
+        display: block;
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        transition: width 0.35s ease;
+      }
+
+      .question-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-top: 14px;
+      }
+      .q-title {
+        font-size: 18px;
+        margin: 0;
+      }
+      .q-diff {
+        font-size: 13px;
+        color: var(--muted);
+        padding: 6px 10px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .options {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-top: 14px;
+      }
+      .opt {
+        padding: 12px 14px;
+        border-radius: 10px;
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.03);
+        cursor: pointer;
+        text-align: left;
+        color: #dff6ff;
+      }
+      .opt:hover {
+        transform: translateY(-3px);
+      }
+      .opt.correct {
+        background: linear-gradient(
+          90deg,
+          rgba(30, 180, 110, 0.14),
+          rgba(30, 180, 110, 0.08)
+        );
+        border-color: rgba(30, 180, 110, 0.2);
+      }
+      .opt.wrong {
+        background: linear-gradient(
+          90deg,
+          rgba(220, 40, 40, 0.08),
+          rgba(220, 40, 40, 0.04)
+        );
+        border-color: rgba(220, 40, 40, 0.18);
+      }
+      .opt.disabled {
+        opacity: 0.65;
+        cursor: default;
+      }
+
+      .nav-row {
+        display: flex;
+        gap: 10px;
+        margin-top: 16px;
+        align-items: center;
+      }
+      .btn {
+        padding: 10px 14px;
+        border-radius: 10px;
+        border: 0;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      .btn.primary {
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        color: #02212b;
+      }
+      .btn.ghost {
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid rgba(255, 255, 255, 0.03);
+      }
+      .small {
+        font-size: 13px;
+        padding: 8px 10px;
+      }
+
+      .footer-note {
+        color: var(--muted);
+        margin-top: 12px;
+        font-size: 13px;
+      }
+
+      /* === Result card === */
+      .results {
+        text-align: center;
+        padding: 18px;
+      }
+      .bigscore {
+        font-size: 44px;
+        margin: 8px 0;
+        color: var(--accent-2);
+      }
+      .result-list {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 12px;
+      }
+
+      /* === Footer === */
+      footer {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          90deg,
+          rgba(0, 14, 26, 0.95),
+          rgba(2, 20, 35, 0.95)
+        );
+        border-top: 1px solid rgba(255, 255, 255, 0.03);
+        padding: 10px 0;
+      }
+      .footer-inner {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 14px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      /* === Responsive === */
+      @media (max-width: 800px) {
+        .hero-grid {
+          flex-direction: column-reverse;
+        }
+        .hero-right {
+          width: 100%;
+        }
+        .topbar {
+          padding: 10px;
+        }
+        .brand h1 {
+          font-size: 16px;
+        }
+        .hero-left h2 {
+          font-size: 22px;
+        }
+      }
+      @media (max-width: 420px) {
+        .q-title {
+          font-size: 16px;
+        }
+        .hero-left h2 {
+          font-size: 20px;
+        }
+        .hero-art {
+          height: 120px;
+        }
+        .logo svg {
+          width: 34px;
+          height: 34px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="topbar">
+        <div class="logo" aria-hidden="true">
+          <!-- compact svg logo -->
+          <svg
+            viewBox="0 0 100 100"
+            xmlns="http://www.w3.org/2000/svg"
+            role="img"
+            aria-label="logo"
+          >
+            <rect width="100" height="100" rx="18" fill="url(#g)" />
+            <defs>
+              <linearGradient id="g" x1="0" x2="1">
+                <stop offset="0" stop-color="#00b1ff" />
+                <stop offset="1" stop-color="#39d0ff" />
+              </linearGradient>
+            </defs>
+            <path
+              d="M22 68 L39 46 L55 60 L78 30"
+              stroke="#042331"
+              stroke-width="6"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <div class="brand">
+            <h1>The Forex Sphere</h1>
+            <p>Insights & Analysis</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" aria-hidden="false">
+      <div class="hero-grid">
+        <div class="hero-left">
+          <h3>Forex Trading</h3>
+          <h2>25 Question Quiz — Medium to Advanced</h2>
+          <p>
+            Test your forex knowledge — risk management, technicals, macro
+            drivers, order types, and advanced concepts. Mobile-first responsive
+            layout inspired by your design.
+          </p>
+        </div>
+        <div class="hero-right" aria-hidden="true">
+          <div class="hero-art">
+            <!-- Decorative SVG art -->
+            <svg
+              viewBox="0 0 600 200"
+              xmlns="http://www.w3.org/2000/svg"
+              preserveAspectRatio="xMidYMid slice"
+            >
+              <defs>
+                <linearGradient id="gg" x1="0" x2="1">
+                  <stop offset="0" stop-color="#092e3f" />
+                  <stop offset="1" stop-color="#042a3b" />
+                </linearGradient>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#gg)" />
+              <g transform="translate(18,18)" fill-opacity="0.95">
+                <circle cx="80" cy="92" r="40" fill="#14b8ff" opacity="0.12" />
+                <rect
+                  x="180"
+                  y="10"
+                  width="260"
+                  height="120"
+                  rx="14"
+                  fill="#0f4666"
+                  opacity="0.12"
+                />
+                <path
+                  d="M 50 150 Q 200 30 360 150"
+                  stroke="#39d0ff"
+                  stroke-width="6"
+                  fill="none"
+                  stroke-linecap="round"
+                  opacity="0.15"
+                />
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quiz -->
+    <main class="quiz-wrap">
+      <div class="card" id="quizCard" aria-live="polite">
+        <div class="meta">
+          <div>25 Qs • Medium → Advanced</div>
+          <div style="margin-left: auto">
+            Time not limited — go at your pace
+          </div>
+        </div>
+
+        <div class="progress" aria-hidden="false" title="Progress">
+          <i id="progBar" style="width: 0%"></i>
+        </div>
+
+        <div class="question-head">
+          <h3 class="q-title" id="qTitle">Loading...</h3>
+          <div class="q-diff" id="qDiff">Difficulty</div>
+        </div>
+
+        <div class="card" style="margin-top: 12px">
+          <div class="options" id="optionsContainer">
+            <!-- options inserted here -->
+          </div>
+
+          <div class="nav-row">
+            <button id="prevBtn" class="btn ghost small" disabled>
+              ← Prev
+            </button>
+            <button
+              id="nextBtn"
+              class="btn ghost small"
+              style="margin-left: auto"
+            >
+              Next →
+            </button>
+            <button
+              id="submitBtn"
+              class="btn primary small"
+              style="display: none"
+            >
+              Finish & Show Score
+            </button>
+          </div>
+
+          <div class="footer-note">
+            Tip: Click an option to lock your answer. Correct/incorrect feedback
+            appears immediately.
+          </div>
+        </div>
+      </div>
+
+      <!-- Results (hidden initially) -->
+      <div
+        class="card"
+        id="resultsCard"
+        style="display: none; margin-top: 18px"
+      >
+        <div class="results" id="resultsContent">
+          <h3>Quiz Results</h3>
+          <div class="bigscore" id="scoreText">0 / 25</div>
+          <div id="percentText" style="color: var(--muted)">0%</div>
+
+          <div class="result-list" id="resultList"></div>
+
+          <div style="margin-top: 16px">
+            <button id="retry" class="btn ghost small">Retry Quiz</button>
+            <button id="review" class="btn primary small">
+              Review Answers
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-inner">
+        <div>© <strong>The Forex Sphere</strong></div>
+        <div>Made for learning • Dark theme • 25 Qs</div>
+      </div>
+    </footer>
+
+    <script>
+      /*
+  Single-file Quiz Script
+  - 25 forex medium → advanced multiple-choice questions
+  - immediate feedback, progress, final score, review mode
+*/
+
+      const questions = [
+        {
+          q: "Which of the following most accurately describes 'pips' in forex?",
+          choices: [
+            "The percentage return on an account",
+            "The smallest standardized price movement in a currency pair",
+            "A type of limit order",
+            "Commission charged by the broker",
+          ],
+          a: 1,
+          diff: "Medium",
+          explain:
+            "A pip is the smallest standardized unit of movement for a currency pair (usually 0.0001 for most pairs).",
+        },
+        {
+          q: "What does 'spread' refer to in forex trading?",
+          choices: [
+            "Difference between account balance and equity",
+            "Difference between buy and sell price quoted by the broker",
+            "The maximum leverage offered",
+            "The slippage on execution",
+          ],
+          a: 1,
+          diff: "Medium",
+          explain:
+            "Spread is the difference between the bid and ask price shown by the broker.",
+        },
+        {
+          q: "If EUR/USD moves from 1.1200 to 1.1250, how many pips did it move?",
+          choices: ["5 pips", "50 pips", "500 pips", "0.5 pips"],
+          a: 1,
+          diff: "Medium",
+          explain:
+            "The difference is 0.0050 = 50 pips (standard pip at 4th decimal).",
+        },
+        {
+          q: "Which order type guarantees execution at the specified price (not better), but may not execute if the market gaps?",
+          choices: [
+            "Market order",
+            "Limit order",
+            "Stop order",
+            "Stop-limit order",
+          ],
+          a: 3,
+          diff: "Advanced",
+          explain:
+            "A stop-limit order will only execute at the limit price (or better) after the stop is triggered — it may not execute if no matching price exists.",
+        },
+        {
+          q: "What is 'currency correlation' and why is it important for risk management?",
+          choices: [
+            "The inverse of volatility",
+            "How two currency pairs move relative to each other; affects portfolio diversification",
+            "The gap between bid/ask",
+            "Broker's policy on hedging",
+          ],
+          a: 1,
+          diff: "Advanced",
+          explain:
+            "Correlation shows how pairs move together; highly correlated positions increase risk concentration.",
+        },
+        {
+          q: "Which macro factor most likely causes a currency to strengthen?",
+          choices: [
+            "Higher unemployment vs prior month",
+            "Lower interest rates compared to other countries",
+            "Higher-than-expected GDP growth",
+            "Trade deficits widening",
+          ],
+          a: 2,
+          diff: "Advanced",
+          explain:
+            "Stronger GDP growth can attract capital inflows and strengthen the currency, all else equal.",
+        },
+        {
+          q: "What is 'carry trade' in forex?",
+          choices: [
+            "Scalping on high spreads",
+            "Buying a currency with high interest and funding with a low-interest currency",
+            "Trading only during carryover",
+            "Using leverage to increase pip gains",
+          ],
+          a: 1,
+          diff: "Advanced",
+          explain:
+            "Carry trade profits from interest rate differentials between two currencies.",
+        },
+        {
+          q: "Which technical indicator is best described as a measure of momentum showing overbought/oversold?",
+          choices: [
+            "Bollinger Bands",
+            "RSI (Relative Strength Index)",
+            "EMA (Exponential Moving Average)",
+            "Fibonacci retracement",
+          ],
+          a: 1,
+          diff: "Medium",
+          explain:
+            "RSI measures momentum; readings above 70 often considered overbought, below 30 oversold.",
+        },
+        {
+          q: "On a daily chart, price breaks support with high volume and closes below. What is the most likely short-term implication?",
+          choices: [
+            "Continuation of upward trend",
+            "Potential further downside and new resistance at old support",
+            "Immediate reversal to new highs",
+            "No implication — only weekly charts matter",
+          ],
+          a: 1,
+          diff: "Medium",
+          explain:
+            "Breaks of support often become resistance and may indicate continuation of downward move.",
+        },
+        {
+          q: "In risk management, what is the purpose of a 'stop loss'?",
+          choices: [
+            "To guarantee profits",
+            "To limit potential loss on a trade to a defined amount",
+            "To increase leverage",
+            "To set entry price",
+          ],
+          a: 1,
+          diff: "Medium",
+          explain:
+            "Stop loss limits losses by automatically closing a position at a predefined level.",
+        },
+        {
+          q: "If you use 1:100 leverage, which statement is true?",
+          choices: [
+            "You need 1% of the position value as margin",
+            "You need 100% of the position value as margin",
+            "You cannot use stop losses",
+            "Account size is irrelevant",
+          ],
+          a: 0,
+          diff: "Medium",
+          explain:
+            "1:100 leverage means required margin is approximately 1% of the position size.",
+        },
+        {
+          q: "What is 'slippage'?",
+          choices: [
+            "Fees charged by broker every month",
+            "Difference between expected price and executed price",
+            "Tax on forex profits",
+            "Spread multiplied by leverage",
+          ],
+          a: 1,
+          diff: "Medium",
+          explain:
+            "Slippage occurs when a market order executes at a worse price than expected due to market movement or liquidity.",
+        },
+        {
+          q: "Which event is likely to create high volatility in a currency pair?",
+          choices: [
+            "Central bank unexpected rate decision",
+            "Minor retail sales report",
+            "A stable inflation reading",
+            "Normal market hours with low news",
+          ],
+          a: 0,
+          diff: "Advanced",
+          explain:
+            "Surprising central bank decisions can rapidly change interest rate expectations and move currencies.",
+        },
+        {
+          q: "What does 'mean reversion' strategy assume about price behavior?",
+          choices: [
+            "Prices trend indefinitely",
+            "Prices revert back toward an average after extremes",
+            "Markets are always efficient",
+            "Correlation is constant",
+          ],
+          a: 1,
+          diff: "Advanced",
+          explain:
+            "Mean reversion expects extreme moves to be followed by a return toward average levels.",
+        },
+        {
+          q: "How is 'position sizing' commonly determined?",
+          choices: [
+            "Fixed lot size for all trades",
+            "Based on a percentage of account risk per trade using stop-loss distance",
+            "By broker's recommendation only",
+            "Based on number of pips expected",
+          ],
+          a: 1,
+          diff: "Advanced",
+          explain:
+            "Good position sizing calculates lot size so that risk (in $ or %) per trade is controlled.",
+        },
+        {
+          q: "What is the main difference between ECN and market-maker brokers?",
+          choices: [
+            "ECN shows aggregated market liquidity; market-makers take the other side",
+            "ECN doesn't allow stop loss",
+            "Market-makers require larger deposits",
+            "There is no real difference",
+          ],
+          a: 0,
+          diff: "Medium",
+          explain:
+            "ECN matches clients with other market participants; market-makers may fill orders from their own book.",
+        },
+        {
+          q: "Which of these best describes 'news trading' risk?",
+          choices: [
+            "Guaranteed profit due to predictable moves",
+            "Low slippage always",
+            "High volatility can cause rapid adverse moves and slippage",
+            "No impact on forex markets",
+          ],
+          a: 2,
+          diff: "Advanced",
+          explain:
+            "News trading offers opportunity but comes with elevated slippage and unpredictable volatility.",
+        },
+        {
+          q: "What is 'order flow' analysis?",
+          choices: [
+            "Analysis of economic calendar only",
+            "Examining actual buy and sell pressure (orders) to anticipate short-term price moves",
+            "Applying moving averages only",
+            "A candlestick pattern name",
+          ],
+          a: 1,
+          diff: "Advanced",
+          explain:
+            "Order flow looks at liquidity and trade execution to infer where price may move.",
+        },
+        {
+          q: "If USD/JPY has historically had a negative correlation with USD/CAD, what does that imply?",
+          choices: [
+            "Both always move in same direction",
+            "They often move in opposite directions",
+            "They have identical pip moves",
+            "No relationship",
+          ],
+          a: 1,
+          diff: "Advanced",
+          explain:
+            "Negative correlation implies when one pair rises, the other tends to fall.",
+        },
+        {
+          q: "What is a limitation of backtesting a forex strategy?",
+          choices: [
+            "It guarantees future profits",
+            "Historical data may not reflect future conditions and slippage/commission can differ",
+            "It accounts for all market psychology",
+            "There are no limitations",
+          ],
+          a: 1,
+          diff: "Advanced",
+          explain:
+            "Backtests cannot fully replicate future liquidity, slippage, and regime shifts.",
+        },
+        {
+          q: "Which indicator would help you identify volatility expansion or contraction?",
+          choices: [
+            "Moving Average Cross",
+            "Bollinger Bands width or ATR (Average True Range)",
+            "Stochastic oscillator",
+            "Fibonacci levels",
+          ],
+          a: 1,
+          diff: "Medium",
+          explain: "Bollinger Band width and ATR measure volatility changes.",
+        },
+        {
+          q: "A trader uses a 1% risk per trade rule. With $10,000 account and a stop that equals $200 risk, what position sizing principle applies?",
+          choices: [
+            "He should risk $200 because 1% is $100, thus reduce size",
+            "He is within rule (1% = $100) so increase size",
+            "He should always risk half the stop value",
+            "Position sizing is irrelevant",
+          ],
+          a: 0,
+          diff: "Advanced",
+          explain:
+            "1% of $10,000 = $100, so a $200 stop exceeds the acceptable risk — size should be reduced to meet the 1% rule.",
+        },
+        {
+          q: "What is 'market sentiment'?",
+          choices: [
+            "A technical indicator only",
+            "The overall attitude of participants (bullish or bearish) which can be gauged from positioning, news, and flows",
+            "Exact future price",
+            "Broker commission levels",
+          ],
+          a: 1,
+          diff: "Medium",
+          explain:
+            "Sentiment reflects collective trader bias and can be a contrarian indicator at extremes.",
+        },
+        {
+          q: "Which of the following best reduces 'overfitting' in algo trading?",
+          choices: [
+            "Running strategy on in-sample data only",
+            "Out-of-sample testing and walk-forward validation",
+            "Using bigger neural networks with more parameters only",
+            "Optimizing on every tick of historical data",
+          ],
+          a: 1,
+          diff: "Advanced",
+          explain:
+            "Out-of-sample and walk-forward tests check strategy robustness across unseen data.",
+        },
+        {
+          q: "What happens to a currency pair when the central bank unexpectedly raises rates?",
+          choices: [
+            "All else equal, the currency tends to appreciate due to higher yields attracting capital",
+            "Currency will definitely depreciate",
+            "Nothing changes",
+            "Volatility becomes zero",
+          ],
+          a: 0,
+          diff: "Advanced",
+          explain:
+            "Higher rates can attract capital flows, strengthening the currency, though full market reaction depends on expectations and context.",
+        },
+      ];
+
+      // --- State ---
+      let index = 0;
+      let answers = new Array(questions.length).fill(null); // store selected index
+      let locked = new Array(questions.length).fill(false); // whether answered
+      const total = questions.length;
+
+      // --- DOM refs ---
+      const qTitle = document.getElementById("qTitle");
+      const qDiff = document.getElementById("qDiff");
+      const opts = document.getElementById("optionsContainer");
+      const progBar = document.getElementById("progBar");
+      const prevBtn = document.getElementById("prevBtn");
+      const nextBtn = document.getElementById("nextBtn");
+      const submitBtn = document.getElementById("submitBtn");
+      const quizCard = document.getElementById("quizCard");
+      const resultsCard = document.getElementById("resultsCard");
+      const scoreText = document.getElementById("scoreText");
+      const percentText = document.getElementById("percentText");
+      const resultList = document.getElementById("resultList");
+      const retryBtn = document.getElementById("retry");
+      const reviewBtn = document.getElementById("review");
+
+      // --- Functions ---
+      function renderQuestion(i) {
+        const item = questions[i];
+        qTitle.textContent = `${i + 1}. ${item.q}`;
+        qDiff.textContent = item.diff;
+        // update progress
+        const percent = Math.round((i / total) * 100);
+        progBar.style.width = `${Math.max(3, percent)}%`;
+
+        // options
+        opts.innerHTML = "";
+        item.choices.forEach((choice, idx) => {
+          const btn = document.createElement("button");
+          btn.className = "opt";
+          btn.innerHTML = `<strong>${String.fromCharCode(
+            65 + idx
+          )}.</strong> ${choice}`;
+          btn.disabled = false;
+
+          // show previous selection / feedback
+          if (locked[i]) {
+            btn.classList.add("disabled");
+            if (idx === questions[i].a) btn.classList.add("correct");
+            if (answers[i] === idx && idx !== questions[i].a)
+              btn.classList.add("wrong");
+          }
+
+          btn.addEventListener("click", () => {
+            if (locked[i]) return;
+            // lock answer and provide immediate feedback
+            locked[i] = true;
+            answers[i] = idx;
+            Array.from(opts.children).forEach((c, ci) => {
+              c.classList.add("disabled");
+              if (ci === questions[i].a) c.classList.add("correct");
+              if (ci === idx && ci !== questions[i].a) c.classList.add("wrong");
+            });
+            // show next automatically after a short delay (optional UX)
+            setTimeout(() => {
+              // move to next if not last
+              if (i < total - 1) {
+                index = i + 1;
+                renderQuestion(index);
+              } else {
+                // show submit button on last question
+                updateNav();
+              }
+            }, 600);
+            updateNav();
+          });
+
+          opts.appendChild(btn);
+        });
+
+        updateNav();
+      }
+
+      function updateNav() {
+        prevBtn.disabled = index === 0;
+        if (index === total - 1) {
+          nextBtn.style.display = "none";
+          submitBtn.style.display = "inline-block";
+        } else {
+          nextBtn.style.display = "inline-block";
+          submitBtn.style.display = "none";
+        }
+        // progress bar updated to show current question too
+        const currentPercent = Math.round(((index + 1) / total) * 100);
+        progBar.style.width = `${Math.max(5, currentPercent)}%`;
+      }
+
+      // navigation handlers
+      prevBtn.addEventListener("click", () => {
+        if (index > 0) {
+          index--;
+          renderQuestion(index);
+        }
+      });
+      nextBtn.addEventListener("click", () => {
+        if (index < total - 1) {
+          index++;
+          renderQuestion(index);
+        }
+      });
+      submitBtn.addEventListener("click", showResults);
+      retryBtn &&
+        retryBtn.addEventListener("click", () => {
+          // reset
+          index = 0;
+          answers = new Array(total).fill(null);
+          locked = new Array(total).fill(false);
+          resultsCard.style.display = "none";
+          quizCard.style.display = "block";
+          renderQuestion(index);
+        });
+      reviewBtn &&
+        reviewBtn.addEventListener("click", () => {
+          // show review: show each question with colored answers
+          resultsCard.style.display = "none";
+          quizCard.style.display = "block";
+          index = 0;
+          renderQuestion(index);
+        });
+
+      // result computation & display
+      function showResults() {
+        // compute score
+        let correct = 0;
+        resultList.innerHTML = "";
+        questions.forEach((q, i) => {
+          if (answers[i] === q.a) correct++;
+          const el = document.createElement("div");
+          el.style.background = "rgba(255,255,255,0.02)";
+          el.style.padding = "8px";
+          el.style.borderRadius = "8px";
+          el.style.minWidth = "220px";
+          el.style.border = "1px solid rgba(255,255,255,0.03)";
+          el.innerHTML = `
+      <div style="font-weight:700; margin-bottom:6px">${i + 1}. ${q.q}</div>
+      <div style="color:var(--muted); font-size:13px">
+        <div>Your answer: <strong style="color:${
+          answers[i] === q.a ? "#8fffbf" : "#ff9ea6"
+        }">${
+            answers[i] === null
+              ? "No answer"
+              : String.fromCharCode(65 + (answers[i] || 0)) +
+                ". " +
+                q.choices[answers[i] || 0]
+          }</strong></div>
+        <div>Correct: <strong style="color:var(--accent-2)">${String.fromCharCode(
+          65 + q.a
+        )}. ${q.choices[q.a]}</strong></div>
+        <div style="margin-top:6px;color:var(--muted);font-size:12px">Explain: ${
+          q.explain
+        }</div>
+      </div>
+    `;
+          resultList.appendChild(el);
+        });
+
+        const percent = Math.round((correct / total) * 100);
+        scoreText.textContent = `${correct} / ${total}`;
+        percentText.textContent = `${percent}%`;
+        // hide quiz, show results
+        quizCard.style.display = "none";
+        resultsCard.style.display = "block";
+        // progress bar full
+        progBar.style.width = "100%";
+      }
+
+      // init
+      renderQuestion(index);
+
+      // keyboard navigation (optional)
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight") {
+          if (index < total - 1) {
+            index++;
+            renderQuestion(index);
+          }
+        } else if (e.key === "ArrowLeft") {
+          if (index > 0) {
+            index--;
+            renderQuestion(index);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
